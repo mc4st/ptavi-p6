@@ -31,8 +31,8 @@ my_socket.send(bytes(PETICION, 'utf-8') + b'\r\n' + b'\r\n')
 data = my_socket.recv(1024)
 print('Recibido -- ', data.decode('utf-8'))
 datosrecibidos = data.decode('utf-8')
-if datosrecibidos.split()[1] == "100" and datosrecibidos.split()[4] == "180"
-and datosrecibidos.split()[7] == "200":
+datos = datosrecibidos.split()
+if datos[1] == "100" and datos[4] == "180" and datos[7] == "200":
     METHOD = "ACK"
     PETICION = METHOD + " " + "sip:" + name + "@" + SERVER + " " + "SIP/2.0"
     print("Enviando: " + PETICION)
