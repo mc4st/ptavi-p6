@@ -8,6 +8,7 @@ import socketserver
 import sys
 import os
 
+
 class EchoHandler(socketserver.DatagramRequestHandler):
     """
     Echo server class
@@ -24,8 +25,9 @@ class EchoHandler(socketserver.DatagramRequestHandler):
                 break
             print("El cliente nos manda: \n" + line_bytes.decode('utf-8'))
             (metodo, address, sip) = line.split()
-            if metodo not in ["INVITE","BYE","ACK"]:
-                self.wfile.write(b"SIP/2.0 405 Method Not Allowed" + b"\r\n" + b"\r\n")
+            if metodo not in ["INVITE", "BYE", "ACK"]:
+                self.wfile.write(b"SIP/2.0 405 Method Not Allowed" + b"\r\n" +
+                                 b"\r\n")
             elif metodo == "INVITE":
                 self.wfile.write(b"SIP/2.0 100 Trying" + b"\r\n" + b"\r\n")
                 self.wfile.write(b"SIP/2.0 180 Ring" + b"\r\n" + b"\r\n")
@@ -33,12 +35,13 @@ class EchoHandler(socketserver.DatagramRequestHandler):
             elif metodo == "BYE":
                 self.wfile.write(b"SIP/2.0 200 OK" + b"\r\n" + b"\r\n")
             elif metodo == "ACK":
-                # aEjecutar es un string con lo que se ha de ejecutar en la shell
-                aEjecutar = './mp32rtp -i ' + IP + '-p 23032 < ' + fichero_audio
+                aEjecutar = './mp32rtp -i ' + IP + ' -p 23032 < ' +
+                fichero_audio
                 print("Vamos a ejecutar: ", aEjecutar)
                 os.system(aEjecutar)
             else:
-                self.wfile.write(b"SIP/2.0 400 Bad Request" + b"\r\n" + b"\r\n")
+                self.wfile.write(b"SIP/2.0 400 Bad Request" + b"\r\n" +
+                                 b"\r\n")
 if __name__ == "__main__":
     # Creamos servidor de eco y escuchamos
     PORT = int(sys.argv[2])
