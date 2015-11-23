@@ -37,7 +37,6 @@ if datosrecibidos.split()[1] == "100" and datosrecibidos.split()[4] == "180" and
     PETICION = METHOD + " " + "sip:" + name + "@" + SERVER + " " + "SIP/2.0"
     print("Enviando: " + PETICION)
     my_socket.send(bytes(PETICION, 'utf-8') + b'\r\n')
-    data = my_socket.recv(1024)
 
 print("Terminando socket...")
 
