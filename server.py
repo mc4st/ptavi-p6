@@ -17,7 +17,7 @@ class EchoHandler(socketserver.DatagramRequestHandler):
         # Escribe dirección y puerto del cliente (de tupla client_address)
         IP = self.client_address[0]
         PORT = self.client_address[1]
-        fichero_audio = sys.argv[3]
+        fich_audio = sys.argv[3]
         while 1:
             line_bytes = self.rfile.read()
             line = line_bytes.decode('utf-8')
@@ -35,8 +35,7 @@ class EchoHandler(socketserver.DatagramRequestHandler):
             elif metodo == "BYE":
                 self.wfile.write(b"SIP/2.0 200 OK" + b"\r\n" + b"\r\n")
             elif metodo == "ACK":
-                aEjecutar = './mp32rtp -i ' + IP + ' -p 23032 < ' +
-                fichero_audio
+                aEjecutar = './mp32rtp -i ' + IP + ' -p 23032 < ' + fich_audio
                 print("Vamos a ejecutar: ", aEjecutar)
                 os.system(aEjecutar)
             else:
