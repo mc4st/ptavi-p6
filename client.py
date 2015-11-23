@@ -16,7 +16,6 @@ if len(sys.argv) == 3:
     (receptor, SIPport) = direction.split(":")
     SIPport = int(SIPport)
     (name, SERVER) = receptor.split("@")
-    print(receptor, "-----", SIPport, "-----", SERVER)
 else:
     sys.exit("Usage: client.py method receiver@IP:SIPport")
 
@@ -28,7 +27,7 @@ my_socket.connect((SERVER, SIPport))
 # Contenido que vamos a enviar
 PETICION = METHOD + " " + "sip:" + name + "@" + SERVER + " " + "SIP/2.0"
 print("Enviando: " + PETICION)
-my_socket.send(bytes(PETICION, 'utf-8') + b'\r\n')
+my_socket.send(bytes(PETICION, 'utf-8') + b'\r\n' + b'\r\n')
 data = my_socket.recv(1024)
 print('Recibido -- ', data.decode('utf-8'))
 datosrecibidos = data.decode('utf-8')
@@ -36,7 +35,7 @@ if datosrecibidos.split()[1] == "100" and datosrecibidos.split()[4] == "180" and
     METHOD = "ACK"
     PETICION = METHOD + " " + "sip:" + name + "@" + SERVER + " " + "SIP/2.0"
     print("Enviando: " + PETICION)
-    my_socket.send(bytes(PETICION, 'utf-8') + b'\r\n')
+    my_socket.send(bytes(PETICION, 'utf-8') + b'\r\n' + b'\r\n')
 
 print("Terminando socket...")
 
